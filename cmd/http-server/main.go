@@ -1,8 +1,8 @@
 package main
 
-import "fmt"
+import database "github.com/tom0418/go-http-server/db"
 
 func main() {
-	fmt.Println("air test")
-	fmt.Println("air test 2")
+	database.Init()
+	database.Close()
 }
