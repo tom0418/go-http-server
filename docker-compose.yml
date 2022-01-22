@@ -1,4 +1,4 @@
-version '3.8'
+version: '3.8'
 
 services:
   mysql8:
@@ -32,5 +32,5 @@ services:
       - mysql8
 
 volumes:
-  mysql8
-  go-modules
+  mysql8:
+  go-modules:
