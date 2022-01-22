@@ -1,0 +1,36 @@
+version '3.8'
+
+services:
+  mysql8:
+    image: mysql:8.0.27
+    container_name: "${COMPOSE_PROJECT_NAME}_mysql8"
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    env_file:
+      - ./env/mysql.env
+    volumes:
+      - mysql8:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: "${COMPOSE_PROJECT_NAME}_api"
+    command: /bin/sh -c "go run main.go"
+    stdin_open: true
+    tty: true
+    env_file:
+      - ./env/api.env
+    working_dir: /app
+    volumes:
+      - .:/app
+      - go-modules:/go/pkg/mod
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql8
+
+volumes:
+  mysql8
+  go-modules
